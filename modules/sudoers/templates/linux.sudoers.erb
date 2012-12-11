@@ -1,0 +1,44 @@
+# sudoers file.
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the sudoers man page for the details on how to write a sudoers file.
+#
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+Cmnd_Alias      TSM  =  /usr/prod/adsm/incr1.cmd,/usr/prod/adsm/archiv1.cmd,/usr/prod/adsm/tsmclientaction.pl,/usr/prod/adsm/adsmbat1.pl
+
+# Defaults specification
+#  force error, instead of waiting for required password
+Defaults:adsmbat1  passwd_tries=0
+
+# User privilege specification
+root	ALL=(ALL) ALL
+adsmbat1 ALL=(ALL) NOPASSWD: TSM
+SOSBetrieb   ALL=(ALL) ALL
+<%= hostname %>   ALL=(ALL) ALL
+
+#added 08.02.2010 to allow only following LDAP-groups to become root privileges
+%adm_IB         ALL=(ALL)       ALL
+%adm_IE         ALL=(ALL)       ALL
+%adm_PUPP       ALL=(ALL)       ALL
+#%dummyrep         ALL=(ALL)       ALL
+
+# Uncomment to allow people in group wheel to run all commands
+# %wheel	ALL=(ALL)	ALL
+
+# Same thing without a password
+# %wheel	ALL=(ALL)	NOPASSWD: ALL
+
+# Samples
+# %users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
+# %users  localhost=/sbin/shutdown -h now
+<% if defined?(:sudoers_list) %>
+  <% sudoers_list.each do |user| %>
+<%= user %> ALL=(ALL) ALL
+  <% end %>
+<% end %>

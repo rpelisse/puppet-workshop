@@ -1,0 +1,74 @@
+# sudoers file.
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# See the sudoers man page for the details on how to write a sudoers file.
+#
+
+# Logfile
+Defaults logfile=/var/log/sudo.log
+
+# Host alias specification
+
+# User alias specification
+User_Alias  TSA_USR = v064317, v160055, v160945
+User_Alias  TSA_USRWAS = tsawas
+
+# Cmnd alias specification
+Cmnd_Alias      TPM = /usr/bin/, /usr/sbin/, /usr/local/bin/, /usr/lib/methods/, /usr/es/sbin/cluster/utilities/, /usr/emc/scripts/bin/, /usr/emc/scripts/diskconfig/, /opt/csm/bin/, /etc/, /tmp/, /tmp/migration/
+Cmnd_Alias      TSA_RT1 = /usr/sbin/rsct/bin/addrpnode, /usr/sbin/rsct/bin/mkrpdomain, /usr/sbin/rsct/bin/preprpnode, /usr/sbin/rsct/bin/resetrsrc, /usr/sbin/rsct/bin/rmrpdomain, /usr/sbin/rsct/bin/startrpdomain
+Cmnd_Alias      TSA_RT2 = /usr/sbin/rsct/bin/startrpnode, /usr/sbin/rsct/bin/startrsrc, /usr/sbin/rsct/bin/stoprpdomain, /usr/sbin/rsct/bin/stoprpnode, /usr/sbin/rsct/bin/stoprsrc, /usr/sbin/rsct/bin/chrg, /usr/sbin/rsct/bin/lsrgreq
+Cmnd_Alias      TSA_RT3 = /usr/sbin/rsct/bin/rgmbrreq, /usr/sbin/rsct/bin/rgreq, /usr/sbin/rsct/bin/rpttr, /usr/bin/samadapter, /usr/sbin/rsct/bin/samctrl, /usr/sbin/rsct/bin/samdiag, /usr/sbin/rsct/bin/sampolicy
+Cmnd_Alias      TSA_RT4 = /usr/sbin/rsct/bin/chrsrc, /usr/sbin/rsct/bin/mkrsrc, /usr/sbin/rsct/bin/rmrsrc, /usr/sbin/rsct/bin/addrgmbr, /usr/sbin/rsct/bin/chrel, /usr/sbin/rsct/bin/chrgmbr, /usr/sbin/rsct/bin/mkrel, /usr/sbin/rsct/bin/mkrg, /usr/sbin/rsct/bin/rmrel, /usr/sbin/rsct/bin/rmrg, /usr/sbin/rsct/bin/rmrgmbr
+Cmnd_Alias      TSA_RT5 = /usr/sbin/rsct/bin/lssam, /opt/tsa/script/getsadata, /usr/bin/samlog, /usr/bin/runact
+Cmnd_Alias      TSA_SH = /opt/tsa/tsaadm.sh, /opt/tsa/script/, /usr/local/init.d/bin/
+Cmnd_Alias      TSA_INITD = /usr/local/bin/lsinitdlnk, /usr/local/bin/mkinitdlnk, /usr/local/bin/rminitdlnk
+Cmnd_Alias      TSA_INITD2 = /usr/local/bin/statusinitd, /usr/local/bin/startinitd, /usr/local/bin/stopinitd
+Cmnd_Alias      TSA_OPER1 = /usr/sbin/rsct/bin/resetrsrc, /usr/sbin/rsct/bin/startrpdomain, /usr/sbin/rsct/bin/startrpnode, /usr/sbin/rsct/bin/startrsrc, /usr/sbin/rsct/bin/stoprpdomain, /usr/sbin/rsct/bin/stoprpnode, /usr/sbin/rsct/bin/stoprsrc, /usr/sbin/rsct/bin/chrg, /usr/sbin/rsct/bin/lsrgreq, /usr/sbin/rsct/bin/rgmbrreq
+Cmnd_Alias      TSA_OPER2 = /usr/sbin/rsct/bin/rgreq, /usr/bin/samadapter, /usr/sbin/rsct/bin/samctrl, /usr/sbin/rsct/bin/samdiag, /usr/sbin/rsct/bin/lssam, /opt/tsa/script/getsadata, /usr/bin/samlog
+
+Cmnd_Alias      SU = /usr/bin/su
+Cmnd_Alias      EMC = /usr/sbin/powermt
+Cmnd_Alias      SECURITY = /usr/bin/passwd
+Cmnd_Alias      TSM  = /usr/prod/adsm/adsmbat1.pl,/usr/prod/adsm/tsmclientaction.pl
+Cmnd_Alias      LSOF = /usr/sbin/lsof
+
+
+# Defaults specification
+Defaults env_keep += CT_MANAGEMENT_SCOPE
+Defaults:adsmbat1  passwd_tries=0
+
+# User privilege specification
+%initdadm       ALL=(ALL) TSA_INITD
+%tsaoper        ALL=(ALL) TSA_OPER1, TSA_OPER2
+TSA_USR         ALL=(ALL) TSA_SH, TSA_RT1, TSA_RT2, TSA_RT3, TSA_RT4, TSA_RT5
+TSA_USRWAS      ALL=(ALL) NOPASSWD: TSA_SH, TSA_RT1, TSA_RT2, TSA_RT3, TSA_RT4, TSA_RT5
+tsaadm          ALL=(ALL) NOPASSWD: TSA_INITD2
+taddmusr  	ALL=(ALL) NOPASSWD: LSOF
+tpmadm ALL=(ALL) NOPASSWD: TPM
+pwrec ALL=(ALL) SECURITY
+root    ALL=(ALL) ALL
+adsmbat1 ALL=(ALL) NOPASSWD: TSM
+v999999 ALL=(ALL) NOPASSWD: SU
+
+# Uncomment to allow people in group wheel to run all commands
+%tsmadm         ALL=(ALL)       SU
+%wbtr           ALL=(ALL)       NOPASSWD: SU
+%sysmgmt        ALL=(ALL)       SU
+%ambadm         ALL=(ALL)       SU
+%emcadm         ALL=(ALL)       EMC
+%esadm        	ALL=(ALL)       SU
+# %wheel        ALL=(ALL)       ALL
+
+# Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+# Samples
+# %users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
+# %users  localhost=/sbin/shutdown -h now
+<% if defined?(:sudoers_list) %>
+  <% sudoers_list.each do |user| %>
+<%= user %> ALL=(ALL) ALL
+  <% end %>
+<% end %>
+
