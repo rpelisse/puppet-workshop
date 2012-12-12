@@ -4,7 +4,7 @@ Puppet::Type.type(:purpose).provide(:rhel) do
     def create
         begin
             file = File.open("/etc/purpose", "w")
-                file.write("I have a purpose in life - and you ?") 
+                file.write("I have a purpose in life - and you ?")
         rescue IOError => e
               #some error occur, dir not writable etc.
         ensure
@@ -13,10 +13,10 @@ Puppet::Type.type(:purpose).provide(:rhel) do
     end
 
     def destroy
-        File.unlink('/etc/purpose/')
+        File.unlink('/etc/purpose')
     end
 
     def exists?
-        false
+        File.exists?('/etc/purpose')
     end
 end

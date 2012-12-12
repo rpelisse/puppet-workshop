@@ -1,4 +1,4 @@
-define sudoers::sudoers($sudoers_file='linux.sudoers', $sudoers_list, $sudoers_file_group='root') { 
+define sudoers::sudoers($sudoers_file='linux.sudoers', $sudoers_list, $sudoers_file_group='root') {
 
   file { '/etc/sudoers':
     owner => root,

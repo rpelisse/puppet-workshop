@@ -36,7 +36,7 @@ SyslogFacility AUTHPRIV
 # Authentication:
 
 #LoginGraceTime 2m
-<% if operatingsystem == "RedHat" %> 
+<% if operatingsystem == "RedHat" %>
 PermitRootLogin no
 <% end %>
 
@@ -82,13 +82,13 @@ GSSAPIAuthentication yes
 #GSSAPICleanupCredentials yes
 GSSAPICleanupCredentials yes
 
-# Set this to 'yes' to enable PAM authentication, account processing, 
-# and session processing. If this is enabled, PAM authentication will 
-# be allowed through the ChallengeResponseAuthentication mechanism. 
-# Depending on your PAM configuration, this may bypass the setting of 
-# PasswordAuthentication, PermitEmptyPasswords, and 
-# "PermitRootLogin without-password". If you just want the PAM account and 
-# session checks to run without PAM authentication, then enable this but set 
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
+# be allowed through the ChallengeResponseAuthentication mechanism.
+# Depending on your PAM configuration, this may bypass the setting of
+# PasswordAuthentication, PermitEmptyPasswords, and
+# "PermitRootLogin without-password". If you just want the PAM account and
+# session checks to run without PAM authentication, then enable this but set
 # ChallengeResponseAuthentication=no
 #UsePAM no
 UsePAM yes
