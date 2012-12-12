@@ -62,12 +62,12 @@ node default {
     # module 'purpose' for more details.
     purpose { 'sanity-check': }
 
-#   TODO: Fix !
-#    $members=['tiffany','kate']
-#    group { 'girl':
-#      ensure => present,
-#      members => $members,
-#      require => User[$members],
-#    }
+    # Example of group management
+    $members=['tiffany','kate']
+    group { 'girl':
+      ensure => present,
+      members => $members,
+      require => User[$members],
+    }
 }
 
