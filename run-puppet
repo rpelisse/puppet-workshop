@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+
+readonly PUPPET_REPO=${1:-'.'}
+
+if [ -d "${PUPPET_REPO}" ]; then
+    sudo puppet apply --verbose --fileserverconfig ${PUPPET_REPO}/fileserver.conf \
+        --modulepath ${PUPPET_REPO}/modules/ ${PUPPET_REPO}/manifests/site.pp
+    exit ${?}
+else
+    echo "Puppet repository provided [${PUPPET_REPO}] is not a valid directory"
+    exit 1
+fi
